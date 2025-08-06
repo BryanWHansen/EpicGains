@@ -14,17 +14,21 @@ type Story = {
 type GoalCardProps = {
   title: string;
   stories: Story[];
+  progress: number;
+  navigation: any;
 };
 
-const GoalCard: React.FC<GoalCardProps> = ({ title, stories }) => {
+const GoalCard: React.FC<GoalCardProps> = ({
+  title,
+  stories,
+  progress,
+  navigation,
+}) => {
   const [collapsed, setCollapsed] = useState(false);
-  const [storiesState, setStoriesState] = useState<Story[]>([...stories]);
-  const completed = storiesState.filter((s) => s.status === 2).length;
-  const progress =
-    storiesState.length > 0 ? completed / storiesState.length : 0;
+  const [localStories, setLocalStories] = useState<Story[]>(stories);
 
   const handleStoryTap = (id: string) => {
-    setStoriesState((prev) =>
+    setLocalStories((prev) =>
       prev.map((story) =>
         story.id === id ? { ...story, status: (story.status + 1) % 3 } : story
       )
@@ -41,7 +45,11 @@ const GoalCard: React.FC<GoalCardProps> = ({ title, stories }) => {
       {!collapsed && (
         <View style={styles.goalCardContent}>
           <GoalProgress progress={progress} />
-          <GoalBoard stories={storiesState} onStoryTap={handleStoryTap} />
+          <GoalBoard
+            stories={localStories}
+            onStoryTap={handleStoryTap}
+            navigation={navigation}
+          />
         </View>
       )}
     </View>
