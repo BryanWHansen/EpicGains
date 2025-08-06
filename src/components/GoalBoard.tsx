@@ -1,21 +1,35 @@
 import React from "react";
-import { View, Text, FlatList, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  FlatList,
+  TouchableOpacity,
+  StyleSheet,
+} from "react-native";
 import styles from "../styles/styles";
 
 type Story = {
   id: string;
   title: string;
   status: number;
+  description?: string;
+  targetDate?: string;
+  details?: string;
 };
 
 type GoalBoardProps = {
   stories: Story[];
   onStoryTap: (id: string) => void;
+  navigation: any;
 };
 
 const STATUS_LABELS = ["Pending", "In Progress", "Completed"];
 
-const GoalBoard: React.FC<GoalBoardProps> = ({ stories, onStoryTap }) => {
+const GoalBoard: React.FC<GoalBoardProps> = ({
+  stories,
+  onStoryTap,
+  navigation,
+}) => {
   const groupedStories: any = {
     0: stories.filter((s) => s.status === 0),
     1: stories.filter((s) => s.status === 1),
@@ -23,7 +37,17 @@ const GoalBoard: React.FC<GoalBoardProps> = ({ stories, onStoryTap }) => {
   };
 
   const renderStory = ({ item }: { item: Story }) => (
-    <TouchableOpacity onPress={() => onStoryTap(item.id)}>
+    <TouchableOpacity
+      onPress={() =>
+        navigation.navigate("StoryDetails", {
+          title: item.title,
+          description: item.description ?? "No description provided.",
+          targetDate: item.targetDate ?? "Not set",
+          details: item.details ?? "No additional details.",
+        })
+      }
+      onLongPress={() => onStoryTap(item.id)}
+    >
       <View key={item.id} style={styles.card}>
         <Text style={styles.cardText}>{item.title}</Text>
       </View>
@@ -36,7 +60,7 @@ const GoalBoard: React.FC<GoalBoardProps> = ({ stories, onStoryTap }) => {
         <View key={status} style={styles.column}>
           <Text style={styles.columnHeader}>{STATUS_LABELS[status]}</Text>
           <FlatList
-            data={groupedStories[status]}
+            data={[...groupedStories[status]]}
             renderItem={renderStory}
             keyExtractor={(item) => item.id}
             extraData={stories}

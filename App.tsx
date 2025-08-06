@@ -1,20 +1,17 @@
-// App.tsx
-import React from "react";
-import { JSX } from "react";
-import { SafeAreaView, SectionList } from "react-native";
-import rawGoals from "./src/data/goals";
-import { withCalculatedProgress } from "./src/utils/dataHelper";
-import styles from "./src/styles/styles";
-import GoalCard from "./src/components/GoalCard";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import GoalScreen from "./src/screens/GoalScreen";
+import StoryDetailsScreen from "./src/screens/StoryDetailsScreen";
 
-export default function App(): JSX.Element {
-  const goals = withCalculatedProgress(rawGoals);
+const Stack = createNativeStackNavigator();
 
+export default function App() {
   return (
-    <SafeAreaView style={styles.container}>
-      {goals.map((goal, index) => (
-        <GoalCard key={index} title={goal.title} stories={goal.data} />
-      ))}
-    </SafeAreaView>
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="Goals" component={GoalScreen} />
+        <Stack.Screen name="StoryDetails" component={StoryDetailsScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
