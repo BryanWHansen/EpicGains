@@ -1,21 +1,32 @@
+// src/screens/WelcomeScreen.tsx
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
-import { getCurrentUser } from "../firebase/auth";
+import { View, Text } from "react-native";
+import AppHeader from "../components/AppHeader";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { RootStackParamList } from "../navigation/types";
 
-const WelcomeScreen: React.FC = () => {
-  const user = getCurrentUser();
+type Props = NativeStackScreenProps<RootStackParamList, "Welcome">;
+
+const WelcomeScreen: React.FC<Props> = ({ navigation }) => {
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Welcome!</Text>
-      <Text style={styles.sub}>{user?.email ?? "Signed in"}</Text>
+    <View style={{ flex: 1 }}>
+      <AppHeader
+        showNavMenu
+        showUserMenu
+        navItems={[
+          {
+            label: "Go to Goals",
+            icon: "target",
+            onPress: () => navigation.navigate("Goals"),
+          },
+        ]}
+        userItems={[{ label: "Profile", icon: "account", onPress: () => {} }]}
+      />
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <Text>Welcome to EpicGoals!</Text>
+      </View>
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: { flex: 1, alignItems: "center", justifyContent: "center" },
-  title: { fontSize: 28, fontWeight: "bold", marginBottom: 8 },
-  sub: { fontSize: 16, color: "#666" },
-});
 
 export default WelcomeScreen;

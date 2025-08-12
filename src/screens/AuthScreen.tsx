@@ -4,6 +4,7 @@ import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../navigation/types";
 import { signIn, getCurrentUser } from "../firebase/auth";
+import AppHeader from "../components/AppHeader";
 
 type Nav = NativeStackNavigationProp<RootStackParamList, "Auth">;
 
@@ -22,29 +23,32 @@ const AuthScreen: React.FC = () => {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.heading}>Sign In</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Email"
-        autoCapitalize="none"
-        keyboardType="email-address"
-        value={email}
-        onChangeText={setEmail}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Password"
-        secureTextEntry
-        value={password}
-        onChangeText={setPassword}
-      />
-      <Button title="Sign In" onPress={handleSignIn} />
-      <View style={{ height: 12 }} />
-      <Button
-        title="Create an account"
-        onPress={() => navigation.navigate("SignUp")}
-      />
+    <View style={{ flex: 1 }}>
+      <AppHeader title="EpicGoals" showNavMenu={false} showUserMenu={false} />
+      <View style={styles.container}>
+        <Text style={styles.heading}>Sign In</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="Email"
+          autoCapitalize="none"
+          keyboardType="email-address"
+          value={email}
+          onChangeText={setEmail}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Password"
+          secureTextEntry
+          value={password}
+          onChangeText={setPassword}
+        />
+        <Button title="Sign In" onPress={handleSignIn} />
+        <View style={{ height: 12 }} />
+        <Button
+          title="Create an account"
+          onPress={() => navigation.navigate("SignUp")}
+        />
+      </View>
     </View>
   );
 };

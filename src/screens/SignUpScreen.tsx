@@ -5,6 +5,7 @@ import UserForm from "../components/UserForm";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../navigation/types";
+import AppHeader from "../components/AppHeader";
 
 type Nav = NativeStackNavigationProp<RootStackParamList, "SignUp">;
 
@@ -45,16 +46,25 @@ const SignUpScreen: React.FC = () => {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.heading}>Create an Account</Text>
-      <UserForm
-        name={form.name}
-        email={form.email}
-        password={form.password}
-        confirmPassword={form.confirmPassword}
-        onChange={onChange}
-      />
-      {valid && <Button title="Create Account" onPress={onSubmit} />}
+    <View style={{ flex: 1 }}>
+      <AppHeader
+        title="EpicGoals"
+        showBack
+        onBack={() => navigation.goBack()}
+        showNavMenu={false}
+        showUserMenu={false}
+      ></AppHeader>
+      <View style={styles.container}>
+        <Text style={styles.heading}>Create an Account</Text>
+        <UserForm
+          name={form.name}
+          email={form.email}
+          password={form.password}
+          confirmPassword={form.confirmPassword}
+          onChange={onChange}
+        />
+        {valid && <Button title="Create Account" onPress={onSubmit} />}
+      </View>
     </View>
   );
 };
