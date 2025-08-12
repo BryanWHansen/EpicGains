@@ -1,6 +1,5 @@
-// src/screens/WelcomeScreen.tsx
 import React from "react";
-import { View, Text } from "react-native";
+import { View, Text, Button, Alert } from "react-native";
 import AppHeader from "../components/AppHeader";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../navigation/types";
