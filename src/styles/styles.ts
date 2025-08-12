@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
   goalCard: {
     backgroundColor: "#fff",
     borderRadius: 10,
-    marginBottom: 16,
+    marginTop: 16,
     overflow: "hidden",
     elevation: 3,
     shadowColor: "#000",
